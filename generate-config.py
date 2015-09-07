@@ -56,17 +56,17 @@ def WriteConfig(string1,string2):
 #Main program
 os.system('clear')	#Clear screen
 
-print "Loading template..."
+print("Loading template...")
 TEMPLATE = LoadTemplate()
 
-print "Loading customizations..."
+print("Loading customizations...")
 CUSTOMIZATION = LoadCustomizations()
 
-print "Creating config..."
+print("Creating config...")
 CONFIG = ChangeTemplate( TEMPLATE, CUSTOMIZATION )
 
-print "writing config...\n"
+print("writing config...\n")
 WriteConfig(CONFIG, path)
 
 #done
-print "done, your config output.cfg is in %s" % path
+print("done, your config output.cfg is in %s" % path)

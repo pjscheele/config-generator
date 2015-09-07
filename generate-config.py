@@ -8,14 +8,12 @@ import re
 
 #define variables
 CUSTOMIZATION = []
-TEMPLATE = ''
-CONFIG = ""
 path = os.path.dirname(os.path.abspath(__file__)) #get current directory
 
 #Define functions
 #load template
-def LoadTemplate():
-	f = open('%s/template.cfg' % path,'r')
+def LoadTemplate(location, name):
+	f = open('%s/%s' % (location,name),'r')
 	template = f.read()
 	f.close()
 	return template
@@ -45,10 +43,10 @@ def ChangeTemplate(template1, array1):
 
 	return template1
 
-def WriteConfig(string1,string2):
+def WriteConfig(configwr, filename, location):
 	#write config file
-	config = open('%s/output.cfg' % string2 ,'w')
-	config.write("%s" % string1)
+	config = open('%s/%s.cfg' % (location,filename) ,'w')
+	config.write("%s" % configwr)
 	config.close()
 
 	return 1
@@ -56,17 +54,24 @@ def WriteConfig(string1,string2):
 #Main program
 os.system('clear')	#Clear screen
 
-print("Loading template...")
-TEMPLATE = LoadTemplate()
+print("Loading templates...")
+TEMPLATESRX = LoadTemplate(path, "template-srx.cfg")
+TEMPLATESW = LoadTemplate(path, "template-sw.cfg")
 
 print("Loading customizations...")
 CUSTOMIZATION = LoadCustomizations()
 
-print("Creating config...")
-CONFIG = ChangeTemplate( TEMPLATE, CUSTOMIZATION )
+print("Creating srx config...")
+CONFIGSRX = ChangeTemplate( TEMPLATESRX, CUSTOMIZATION )
 
-print("writing config...\n")
-WriteConfig(CONFIG, path)
+print("Creating switch config...")
+CONFIGSW = ChangeTemplate( TEMPLATESW, CUSTOMIZATION )
+
+print("writing config-srx.cfg...\n")
+WriteConfig(CONFIGSRX,"config-srx", path)
+
+print("writing config-switch.cfg...\n")
+WriteConfig(CONFIGSW,"config-switch", path)
 
 #done
-print("done, your config output.cfg is in %s" % path)
+print("done, your configs are in %s" % path)
